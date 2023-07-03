@@ -24,19 +24,19 @@ import java.lang.ref.WeakReference;
 
 
 /*
-* footer界面
-*/
+ * fragment_main.xml：footer界面
+ */
 public class MainFragment extends Fragment {
-    private static final String TAG = "MainFragment";
-    private static final int REFRESH_FOOTER = 3;
-    private static final int REFRESH_PLAY = 4;
-    private static MainFragment mainFragment = null;
+    private static final int          REFRESH_FOOTER = 3;
+    private static final int          REFRESH_PLAY   = 4;
+    private static       MainFragment mainFragment   = null;
 
-    private View view;
-    private MusicService musicService;
-    private TextView textView_song;
+    private View          view;
+    private MusicService  musicService;
+    private TextView      textView_song;
     private FooterHandler footerHandler;
 
+    // 单例模式
     public static MainFragment getInstance() {
         if (mainFragment == null) {
             synchronized (MainFragment.class) {
@@ -51,7 +51,6 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
         view = inflater.inflate(R.layout.fragment_main, container, false);
         initMainView();
         footerHandler = new FooterHandler(this);
@@ -62,13 +61,12 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    /**
-     * 初始化footer布局
-     */
+    //  初始化footer布局
     private void initMainView() {
-        musicService = MusicServiceImpl.getInstance(getContext());
+        musicService = MusicServiceImpl.getInstance(getContext());      // 获取音乐服务（ Service 单例对象）
         //footer中的播放按钮
         final ImageView ImageView_play = view.findViewById(R.id.main_footer_play);
+        // 播放按钮的点击事件
         ImageView_play.setOnClickListener(view -> {
             musicService.play(null);
             if (musicService.isPlaying()) {
@@ -77,45 +75,38 @@ public class MainFragment extends Fragment {
                 ImageView_play.setImageResource(R.drawable.ic_play_red);
             }
         });
-
-        //footer中的上一首按钮
+        // footer中的上一首按钮
         final ImageView ImageView_last = view.findViewById(R.id.main_footer_last);
         ImageView_last.setOnClickListener(view -> musicService.last());
-
-        //footer中的下一首按钮
+        // footer中的下一首按钮
         final ImageView ImageView_next = view.findViewById(R.id.main_footer_next);
         ImageView_next.setOnClickListener(view -> musicService.next());
-
+        // footer中的歌曲名
         textView_song = view.findViewById(R.id.main_footer_song);
         textView_song.setText(musicService.getCurrentMusicInfo());
-        musicService.setMusicChangedListener(() -> refreshFooter());
-        musicService.setMusicPlayingChangedListener(() -> refreshPlay());
-
+        musicService.setMusicChangedListener(() -> refreshFooter());        // 设置音乐改变监听器
+        musicService.setMusicPlayingChangedListener(() -> refreshPlay());   // 设置音乐播放状态改变监听器
+        // 获取 fragment 的整体布局，并设置点击事件：点击当前正在播放的歌曲，进入歌曲详情界面
         LinearLayout footer = view.findViewById(R.id.main_footer);
         footer.setOnClickListener(view -> enterMusicInfoFragment());
     }
 
-
     private void enterMusicInfoFragment() {
         MainActivity mainActivity = (MainActivity) getActivity();
         if (mainActivity != null) {
-            mainActivity.enterMusicInfoFragment();
+            mainActivity.enterMusicInfoFragment();  // 进入歌曲详情界面
         }
     }
 
-    //刷新footer
-    private void refreshFooter() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                footerHandler.sendEmptyMessage(REFRESH_FOOTER);
-            }
-        }).start();
+    //刷新 footer
+    private void refreshFooter() {new Thread(() -> footerHandler.sendEmptyMessage(REFRESH_FOOTER)).start();}
+    private void refreshPlay() {
+        new Thread(() -> footerHandler.sendEmptyMessage(REFRESH_PLAY)).start();
     }
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        Log.d(TAG, "onHiddenChanged: ");
         if (!hidden) {
             refreshPlay();
             initMainView();
@@ -123,9 +114,6 @@ public class MainFragment extends Fragment {
         super.onHiddenChanged(hidden);
     }
 
-    private void refreshPlay() {
-        new Thread(() -> footerHandler.sendEmptyMessage(REFRESH_PLAY)).start();
-    }
 
 
     /**
@@ -135,6 +123,7 @@ public class MainFragment extends Fragment {
     private static class FooterHandler extends Handler {
 
         WeakReference<MainFragment> mainFragment;
+
         private FooterHandler(MainFragment mainFragment) {
             this.mainFragment = new WeakReference<>(mainFragment);
         }

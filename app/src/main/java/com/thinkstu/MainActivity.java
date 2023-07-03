@@ -17,11 +17,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //初始化数据库
         LitePal.initialize(this);
-        //隐藏最上方工具栏
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
         //将碎片和activity绑定
         initMainFragment(savedInstanceState);
         //避免点击editText时，软键盘遮挡输入框
@@ -42,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //初始化footer
+    // 隐藏 MainFragment，显示歌曲播放页
     public void enterMusicInfoFragment() {
         FragmentManager     fragmentManager     = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

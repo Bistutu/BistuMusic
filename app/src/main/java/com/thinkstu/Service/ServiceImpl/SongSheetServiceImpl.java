@@ -25,7 +25,7 @@ public class SongSheetServiceImpl implements SongSheetService {
     public List<SongSheetBean> findAll() {
         //如果歌单数为0，创建新歌单 将assert中的music存入SongBean
         if(LitePal.findAll(SongSheetBean.class).size() == 0){
-            SongSheetBean songSheet = new SongSheetBean("所有歌曲", null);
+            SongSheetBean songSheet = new SongSheetBean("默认歌单", null);
             songSheet.save();
             return LitePal.findAll(SongSheetBean.class);
         }else{
