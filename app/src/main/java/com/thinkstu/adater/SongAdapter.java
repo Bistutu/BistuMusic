@@ -64,17 +64,7 @@ public class SongAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) contentView.getTag();
         }
         viewHolder.textView.setText(songBean.getName());
-        viewHolder.menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                view.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        showPopMenu(view);
-                    }
-                });
-            }
-        });
+        viewHolder.menu.setOnClickListener(view1 -> view1.post(() -> showPopMenu(view1)));
         viewHolder.menu.setTag(songBean);
         return contentView;
     }
@@ -90,16 +80,13 @@ public class SongAdapter extends BaseAdapter {
         final SongBean songBean = (SongBean) view.getTag();
         final SongAdapter songAdapter = this;
         popupMenu.getMenuInflater().inflate(R.menu.song_menu, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_song_download:
-
-                        Toast.makeText(mContext, "暂未实现！", Toast.LENGTH_SHORT).show();
-                }
-                return false;
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.menu_song_download:
+                    // TODO 下载功能
+                    Toast.makeText(mContext, "暂未实现！", Toast.LENGTH_SHORT).show();
             }
+            return false;
         });
         popupMenu.show();
     }

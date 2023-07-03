@@ -16,8 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.thinkstu.MainActivity;
-import com.thinkstu.Service.MusicChangedListener;
-import com.thinkstu.Service.MusicPlayingChangedListener;
 import com.thinkstu.Service.MusicService;
 import com.thinkstu.Service.Impl.MusicServiceImpl;
 import com.thinkstu.music.*;
@@ -72,58 +70,30 @@ public class MainFragment extends Fragment {
         musicService = MusicServiceImpl.getInstance(getContext());
         //footer中的播放按钮
         final ImageView ImageView_play = view.findViewById(R.id.main_footer_play);
-        ImageView_play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                musicService.play(null);
-                if (musicService.isPlaying()) {
-                    ImageView_play.setImageResource(R.drawable.ic_pause_red);
-                } else {
-                    ImageView_play.setImageResource(R.drawable.ic_play_red);
-                }
+        ImageView_play.setOnClickListener(view -> {
+            musicService.play(null);
+            if (musicService.isPlaying()) {
+                ImageView_play.setImageResource(R.drawable.ic_pause_red);
+            } else {
+                ImageView_play.setImageResource(R.drawable.ic_play_red);
             }
         });
 
         //footer中的上一首按钮
         final ImageView ImageView_last = view.findViewById(R.id.main_footer_last);
-        ImageView_last.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                musicService.last();
-            }
-        });
+        ImageView_last.setOnClickListener(view -> musicService.last());
 
         //footer中的下一首按钮
         final ImageView ImageView_next = view.findViewById(R.id.main_footer_next);
-        ImageView_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                musicService.next();
-            }
-        });
+        ImageView_next.setOnClickListener(view -> musicService.next());
 
         textView_song = view.findViewById(R.id.main_footer_song);
         textView_song.setText(musicService.getCurrentMusicInfo());
-        musicService.setMusicChangedListener(new MusicChangedListener() {
-            @Override
-            public void refresh() {
-                refreshFooter();
-            }
-        });
-        musicService.setMusicPlayingChangedListener(new MusicPlayingChangedListener() {
-            @Override
-            public void afterChanged() {
-                refreshPlay();
-            }
-        });
+        musicService.setMusicChangedListener(() -> refreshFooter());
+        musicService.setMusicPlayingChangedListener(() -> refreshPlay());
 
         LinearLayout footer = view.findViewById(R.id.main_footer);
-        footer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enterMusicInfoFragment();
-            }
-        });
+        footer.setOnClickListener(view -> enterMusicInfoFragment());
     }
 
 
@@ -155,12 +125,7 @@ public class MainFragment extends Fragment {
     }
 
     private void refreshPlay() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                footerHandler.sendEmptyMessage(REFRESH_PLAY);
-            }
-        }).start();
+        new Thread(() -> footerHandler.sendEmptyMessage(REFRESH_PLAY)).start();
     }
 
 
@@ -169,7 +134,6 @@ public class MainFragment extends Fragment {
      * 由handleMessage处理
      */
     private static class FooterHandler extends Handler {
-        private static final String TAG = "SeekBarHandler";
 
         WeakReference<MainFragment> mainFragment;
         private FooterHandler(MainFragment mainFragment) {

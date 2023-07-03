@@ -72,23 +72,18 @@ public class MainContentFragment extends Fragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_create_sheet, null);
         listView.setAdapter(songSheetAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    SongSheetBean songSheetBean = (SongSheetBean) adapterView.getItemAtPosition(i);
-                    List<SongBean> songBeanList = songSheetService.findSongBeanBySongSheetId(songSheetBean.getId());
-                    if (i!=0) {
-                        EventBus.getDefault().postSticky(new SongDto(songSheetBean, songBeanList));
-                    } else {
-                        EventBus.getDefault().postSticky(new SongDto(songSheetBean, songBeanList, true));
-                    }
-                    mainActivity.enterSongContentFragment();
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            if (mainActivity != null) {
+                SongSheetBean songSheetBean = (SongSheetBean) adapterView.getItemAtPosition(i);
+                List<SongBean> songBeanList = songSheetService.findSongBeanBySongSheetId(songSheetBean.getId());
+                if (i!=0) {
+                    EventBus.getDefault().postSticky(new SongDto(songSheetBean, songBeanList));
+                } else {
+                    EventBus.getDefault().postSticky(new SongDto(songSheetBean, songBeanList, true));
                 }
+                mainActivity.enterSongContentFragment();
             }
         });
-
     }
-
 }

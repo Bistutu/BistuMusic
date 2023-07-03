@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -77,12 +76,9 @@ public class SongContentFragment extends Fragment {
         } else {
             listView.setAdapter(new SongAdapter(getContext(), songDto));
         }
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SongBean songBean = (SongBean) adapterView.getItemAtPosition(i);
-                musicService.play(songBean.getName());
-            }
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            SongBean songBean = (SongBean) adapterView.getItemAtPosition(i);
+            musicService.play(songBean.getName());
         });
     }
 

@@ -73,55 +73,34 @@ public class MusicInfoFragment extends Fragment {
         final ImageView imageView_play = view.findViewById(R.id.info_play);
         ImageView imageView_next = view.findViewById(R.id.info_next);
 
-        musicService.setMusicChangedListener(new MusicChangedListener() {
-            @Override
-            public void refresh() {
-                refreshHeader();
-            }
-        });
-        musicService.setMusicPlayingChangedListener(new MusicPlayingChangedListener() {
-            @Override
-            public void afterChanged() {
-                refreshImgPlay();
-                if (musicService.isPlaying()) {
-                    send();
-                } else {
-                    seekBarHandler.removeCallbacksAndMessages(null);
-                }
+        musicService.setMusicChangedListener(() -> refreshHeader());
+        musicService.setMusicPlayingChangedListener(() -> {
+            refreshImgPlay();
+            if (musicService.isPlaying()) {
+                send();
+            } else {
+                seekBarHandler.removeCallbacksAndMessages(null);
             }
         });
 
         textView_title.setText(musicService.getCurrentMusicInfo());
 
 
-        imageView_last.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                musicService.last();
-            }
-        });
+        imageView_last.setOnClickListener(view -> musicService.last());
 
-        imageView_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                musicService.next();
-            }
-        });
+        imageView_next.setOnClickListener(view -> musicService.next());
 
         refreshImgPlay();
         if (musicService.isPlaying()) {
             send();
         }
-        imageView_play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (musicService.isPlaying()) {
-                    musicService.onPause();
-                } else {
-                    musicService.play(null);
-                }
-                refreshImgPlay();
+        imageView_play.setOnClickListener(view -> {
+            if (musicService.isPlaying()) {
+                musicService.onPause();
+            } else {
+                musicService.play(null);
             }
+            refreshImgPlay();
         });
         seekBar.setMax(musicService.getDuration());
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -141,12 +120,9 @@ public class MusicInfoFragment extends Fragment {
         });
 
         ImageView imageView_back = view.findViewById(R.id.info_head_back);
-        imageView_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getActivity() != null) {
-                    getActivity().onBackPressed();
-                }
+        imageView_back.setOnClickListener(view -> {
+            if (getActivity() != null) {
+                getActivity().onBackPressed();
             }
         });
     }
