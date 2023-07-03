@@ -1,4 +1,5 @@
-package com.thinkstu.Service.Impl;
+package com.thinkstu.Service.ServiceImpl;
+
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -6,30 +7,27 @@ import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-import com.thinkstu.Service.MusicChangedListener;
-import com.thinkstu.Service.MusicPlayingChangedListener;
-import com.thinkstu.Service.MusicService;
-import com.thinkstu.Service.SongSheetService;
-import com.thinkstu.entity.SongBean;
+import com.thinkstu.Service.*;
+import com.thinkstu.entity.*;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
 public class MusicServiceImpl implements MusicService {
-    private static final String TAG = "MusicServiceImpl";
-    private static MusicServiceImpl musicServiceImpl = null;
+    private static final String           TAG              = "MusicServiceImpl";
+    private static       MusicServiceImpl musicServiceImpl = null;
 
     private MediaPlayer mediaPlayer;
-    private String[] musicNames, randomNames;
+    private String[]    musicNames, randomNames;
     private int currentPosition, currentIndex, order = PLAY_ORDER;
-    private AssetManager assetManager;
-    private String currentMusicName;
-    private MusicChangedListener musicChangedListener;
+    private AssetManager                assetManager;
+    private String                      currentMusicName;
+    private MusicChangedListener        musicChangedListener;
     private MusicPlayingChangedListener musicPlayingChangedListener;
 
     private MusicServiceImpl(Context context) {
-        mediaPlayer = new MediaPlayer();
+        mediaPlayer  = new MediaPlayer();
         assetManager = context.getAssets();
         try {
 /*            String result = "";
@@ -79,9 +77,8 @@ public class MusicServiceImpl implements MusicService {
     }
 
 
-
     @Override
-    public void loadMusic(String musicName){
+    public void loadMusic(String musicName) {
         currentMusicName = musicName;
         try {
             //重置
@@ -106,7 +103,7 @@ public class MusicServiceImpl implements MusicService {
                     start();
                 }
             }
-        } else if (!currentMusicName.equals(musicName)){
+        } else if (!currentMusicName.equals(musicName)) {
             loadMusic(musicName);
             this.musicChangedListener.refresh();
             start();
@@ -139,7 +136,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public void seekTo(int progress) {
-        if (!mediaPlayer.isPlaying()){
+        if (!mediaPlayer.isPlaying()) {
             play(null);
         }
         mediaPlayer.seekTo(progress);
@@ -147,7 +144,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public void onResume() {
-        if (!mediaPlayer.isPlaying()){
+        if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
             this.musicPlayingChangedListener.afterChanged();
             mediaPlayer.seekTo(currentPosition);
@@ -158,7 +155,7 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public void setPlayOrder(int i) {
         if (i == PLAY_ORDER) {
-            order = PLAY_ORDER;
+            order        = PLAY_ORDER;
             currentIndex = Arrays.binarySearch(musicNames, currentMusicName);     //二分法查找当前播放音乐的索引
             Log.d(TAG, "setPlayOrder: currentIndex order " + currentIndex);
         } else {
@@ -225,15 +222,16 @@ public class MusicServiceImpl implements MusicService {
 
     /**
      * 洗牌算法
+     *
      * @param names 顺序播放的musicNames
      */
     private void shuffleCard(String[] names) {
-        int len = names.length;
-        Random r = new Random();
+        int    len = names.length;
+        Random r   = new Random();
         for (int i = 0; i < len; i++) {
-            int index = r.nextInt(len);
-            String temp = randomNames[i];
-            randomNames[i] = randomNames[index];
+            int    index = r.nextInt(len);
+            String temp  = randomNames[i];
+            randomNames[i]     = randomNames[index];
             randomNames[index] = temp;
         }
         for (int i = 0; i < len; i++) {
@@ -248,7 +246,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public String getCurrentMusicInfo() {
-        String str = currentMusicName.substring(0, currentMusicName.length()-4);
+        String   str  = currentMusicName.substring(0, currentMusicName.length() - 4);
         String[] info = str.split(" - ");
         return info[1] + "\n" + info[0];
     }
@@ -274,7 +272,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     private int search(String[] randomNames, String a) {
-        for (int i = 0; i < randomNames.length; i ++) {
+        for (int i = 0; i < randomNames.length; i++) {
             if (a.equals(randomNames[i])) {
                 return i;
             }

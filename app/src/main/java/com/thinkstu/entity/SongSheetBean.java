@@ -3,11 +3,12 @@ package com.thinkstu.entity;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
+// 歌单实体类
 public class SongSheetBean extends LitePalSupport {
     private int id;
-    @Column(unique = true)
-    private String name;
-    private String imgAddress;
+    @Column(unique = true)          // 唯一性约束
+    private String name;            // 歌单名
+    private String imgAddress;      // 歌单图片地址
 
     public SongSheetBean(String name, String imgAddress) {
         this.name = name;

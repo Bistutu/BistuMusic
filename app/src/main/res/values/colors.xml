@@ -6,6 +6,8 @@
     <!-- 自定义 -->
     <color name="black">#000</color>
     <color name="reb">#DC143C</color>
+    <color name="light_reb">#DDDC143C</color>
+
     <color name="dividerColor">#22000000</color>
     <color name="dimGrey">#696969</color>
 </resources>

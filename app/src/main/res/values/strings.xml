@@ -4,8 +4,11 @@
     <string name="main_head_my">Bistu音乐</string>
     <!--主页内容-->
     <string name="main_content_title_songSheet">所有歌曲</string>
+    <string name="title">
+        Bistu Music
+    </string>
 
-    <string name="author">ThinkStu</string>
+    <string name="author">创建者：ThinkStu</string>
 
     <string name="menu_download">下载</string>
 </resources>

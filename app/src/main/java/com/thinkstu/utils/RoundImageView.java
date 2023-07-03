@@ -6,19 +6,22 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+
 import androidx.appcompat.widget.AppCompatImageView;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
-/*
-* 资源图处理类
-* */
+
+/**
+ * 资源图处理类：将图片处理成圆形
+ */
 public class RoundImageView extends AppCompatImageView {
-    private float width;
-    private float height;
-    private float radius;
-    private Paint paint;
+    private float  width;
+    private float  height;
+    private float  radius;
+    private Paint  paint;
     private Matrix matrix;
 
     public RoundImageView(Context context) {
@@ -42,7 +45,7 @@ public class RoundImageView extends AppCompatImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        width = getMeasuredWidth();
+        width  = getMeasuredWidth();
         height = getMeasuredHeight();
         radius = Math.min(width, height) / 2;
     }
@@ -66,9 +69,9 @@ public class RoundImageView extends AppCompatImageView {
      * 获取ImageView中资源图片的Bitmap，利用Bitmap初始化图片着色器,通过缩放矩阵将原资源图片缩放到铺满整个绘制区域，避免边界填充
      */
     private BitmapShader initBitmapShader(BitmapDrawable drawable) {
-        Bitmap bitmap = drawable.getBitmap();
+        Bitmap       bitmap       = drawable.getBitmap();
         BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        float scale = Math.max(width / bitmap.getWidth(), height / bitmap.getHeight());
+        float        scale        = Math.max(width / bitmap.getWidth(), height / bitmap.getHeight());
         matrix.setScale(scale, scale);//将图片宽高等比例缩放，避免拉伸
         bitmapShader.setLocalMatrix(matrix);
         return bitmapShader;

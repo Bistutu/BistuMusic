@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
 
-    <com.thinkstu.utils.RoundImageView
-        android:id="@+id/item_songSheet_img"
-        tools:src="@drawable/ic_disk"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:cardElevation="4dp"
+        android:padding="8dp">
 
-    <TextView
-        android:id="@+id/item_songSheet_name"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:gravity="center_vertical"
-        android:textSize="22sp"
-        android:textColor="@color/black"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        tools:text="歌单1"/>
+        <com.thinkstu.utils.RoundImageView
+            android:id="@+id/item_songSheet_img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            tools:src="@drawable/ic_disk" />
 
-    <ImageView
-        android:id="@+id/item_songSheet_menu"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_menu"
-        android:layout_marginTop="60dp"/>
+        <TextView
+            android:id="@+id/item_songSheet_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            tools:text="歌单1" />
 
-
-</LinearLayout>
+        <ImageView
+            android:id="@+id/item_songSheet_menu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_menu" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

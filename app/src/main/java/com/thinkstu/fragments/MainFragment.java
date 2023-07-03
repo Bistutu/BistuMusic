@@ -1,4 +1,4 @@
-package com.thinkstu.ui;
+package com.thinkstu.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.thinkstu.MainActivity;
 import com.thinkstu.Service.MusicService;
-import com.thinkstu.Service.Impl.MusicServiceImpl;
+import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.music.*;
 
 import java.lang.ref.WeakReference;
@@ -58,9 +58,8 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     /**

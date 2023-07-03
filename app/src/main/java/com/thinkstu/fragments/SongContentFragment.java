@@ -1,4 +1,4 @@
-package com.thinkstu.ui;
+package com.thinkstu.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.thinkstu.Service.MusicService;
-import com.thinkstu.Service.Impl.MusicServiceImpl;
+import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.adater.SongAdapter;
 import com.thinkstu.dto.SongDto;
 import com.thinkstu.entity.SongBean;

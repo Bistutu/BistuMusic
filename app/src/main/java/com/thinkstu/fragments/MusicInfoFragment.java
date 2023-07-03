@@ -1,4 +1,4 @@
-package com.thinkstu.ui;
+package com.thinkstu.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,10 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.thinkstu.Service.MusicChangedListener;
-import com.thinkstu.Service.MusicPlayingChangedListener;
 import com.thinkstu.Service.MusicService;
-import com.thinkstu.Service.Impl.MusicServiceImpl;
+import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.music.*;
 
 import java.lang.ref.WeakReference;

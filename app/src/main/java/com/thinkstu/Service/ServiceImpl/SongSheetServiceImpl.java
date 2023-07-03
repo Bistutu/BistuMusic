@@ -1,14 +1,15 @@
-package com.thinkstu.Service.Impl;
+package com.thinkstu.Service.ServiceImpl;
 
-import com.thinkstu.Service.SongSheetService;
-import com.thinkstu.entity.SongBean;
-import com.thinkstu.entity.SongSheetBean;
+
+import com.thinkstu.Service.*;
+import com.thinkstu.entity.*;
 
 import org.litepal.LitePal;
 
 import java.util.List;
 
 public class SongSheetServiceImpl implements SongSheetService {
+    private static final String TAG = "SongSheetServiceImpl";
     @Override
     public boolean add(String name, String imgAddress) {
         SongSheetBean songSheet = new SongSheetBean(name, imgAddress);

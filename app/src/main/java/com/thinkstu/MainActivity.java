@@ -1,24 +1,16 @@
 package com.thinkstu;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.*;
+import androidx.fragment.app.*;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.thinkstu.music.*;
-import com.thinkstu.ui.MainContentFragment;
-import com.thinkstu.ui.MainFragment;
-import com.thinkstu.ui.MusicInfoFragment;
-import com.thinkstu.ui.SongContentFragment;
+import com.thinkstu.fragments.*;
 
 import org.litepal.LitePal;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
+    // 初始化碎片：将碎片和 activity 绑定
     private void initMainFragment(Bundle bundle) {
         if (bundle == null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentManager     fragmentManager     = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction
                     .add(R.id.fragment_host, MainFragment.getInstance(), MainFragment.class.getName())
@@ -51,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     //初始化footer
     public void enterMusicInfoFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager     fragmentManager     = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction
                 .hide(MainFragment.getInstance())
@@ -62,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
     //初始化歌单列表碎片
     public void enterSongContentFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(SongContentFragment.class.getName());
+        FragmentManager     fragmentManager     = getSupportFragmentManager();
+        Fragment            fragment            = fragmentManager.findFragmentByTag(SongContentFragment.class.getName());
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction
                 .hide(MainContentFragment.getInstance());
@@ -84,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
-            Log.d(TAG, "onBackPressed: " + fragmentManager.getBackStackEntryCount());
             fragmentManager.popBackStack();
         }
     }

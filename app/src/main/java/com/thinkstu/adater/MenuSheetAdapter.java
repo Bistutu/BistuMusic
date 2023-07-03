@@ -17,10 +17,10 @@ import java.util.List;
 public class MenuSheetAdapter extends BaseAdapter {
     private static final String TAG = "MenuSheetAdapter";
     private List<SongSheetBean> songSheetBeanList;
-    private Context mContext;
+    private Context             mContext;
     public MenuSheetAdapter(Context context) {
         songSheetBeanList = LitePal.where("id != 1").find(SongSheetBean.class);
-        mContext = context;
+        mContext          = context;
     }
     @Override
     public int getCount() {
@@ -40,8 +40,8 @@ public class MenuSheetAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         SongSheetBean songSheetBean = (SongSheetBean) getItem(i);
-        String name = songSheetBean.getName();
-        ViewHolder viewHolder;
+        String        name          = songSheetBean.getName();
+        ViewHolder    viewHolder;
         View contentView;
         if (view == null) {
             contentView = LayoutInflater.from(mContext).inflate(R.layout.item_menu_list, null);

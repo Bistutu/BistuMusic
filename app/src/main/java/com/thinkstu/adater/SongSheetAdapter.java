@@ -10,13 +10,16 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.Service.SongSheetService;
-import com.thinkstu.Service.Impl.SongSheetServiceImpl;
 import com.thinkstu.entity.SongSheetBean;
 import com.thinkstu.music.*;
 
 import java.util.List;
 
+/**
+ * 作用：歌单适配器
+ */
 public class SongSheetAdapter extends BaseAdapter {
     private List<SongSheetBean> songSheetList;
     private Context             mContext;
@@ -43,11 +46,14 @@ public class SongSheetAdapter extends BaseAdapter {
         return i;
     }
 
+    // 作用：获取歌单列表
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        SongSheetBean    songSheet = (SongSheetBean) getItem(i);
-        View             contentView;
+        SongSheetBean songSheet = (SongSheetBean) getItem(i);
+        View          contentView;
         final ViewHolder viewHolder;
+
+
         if (view == null) {
             contentView          = LayoutInflater.from(mContext).inflate(R.layout.item_songsheet, null);
             viewHolder           = new ViewHolder();
@@ -64,6 +70,7 @@ public class SongSheetAdapter extends BaseAdapter {
                 viewHolder.menu.setVisibility(View.VISIBLE);
             }
         }
+
         viewHolder.imageView.setImageResource(R.drawable.ic_disk);
         viewHolder.name.setText(songSheet.getName());
         viewHolder.menu.setOnClickListener(view1 -> view1.post(() -> showPopMenu(view1)));
