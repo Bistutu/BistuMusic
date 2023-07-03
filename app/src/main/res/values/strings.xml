@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Bistu音乐</string>
+    <!--主页头部-->
+    <string name="main_head_my">Bistu音乐</string>
+    <!--主页内容-->
+    <string name="main_content_title_songSheet">所有歌曲</string>
+
+    <string name="author">ThinkStu</string>
+
+    <string name="menu_download">下载</string>
+</resources>
