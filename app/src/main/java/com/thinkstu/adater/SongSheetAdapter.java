@@ -8,7 +8,7 @@ import android.widget.*;
 import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.entity.*;
-import com.thinkstu.music.*;
+import com.thinkstu.musics.*;
 
 import java.util.List;
 

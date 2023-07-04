@@ -1,26 +1,21 @@
 package com.thinkstu.fragments;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import android.os.*;
+import android.view.*;
+import android.widget.*;
 
-import com.thinkstu.Service.MusicService;
+import androidx.annotation.*;
+import androidx.fragment.app.*;
+
+import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
-import com.thinkstu.adater.SongAdapter;
-import com.thinkstu.dto.SongDto;
-import com.thinkstu.entity.SongBean;
-import com.thinkstu.music.*;
+import com.thinkstu.adater.*;
+import com.thinkstu.dto.*;
+import com.thinkstu.entity.*;
+import com.thinkstu.musics.*;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.greenrobot.eventbus.*;
 
 /* 歌单主界面 */
 public class SongContentFragment extends Fragment {

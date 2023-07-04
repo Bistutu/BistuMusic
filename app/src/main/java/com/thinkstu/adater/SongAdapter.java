@@ -1,19 +1,17 @@
 package com.thinkstu.adater;
 
-import android.content.Context;
+import android.content.*;
+import android.util.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
+import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.dto.SongDto;
 import com.thinkstu.entity.SongBean;
 import com.thinkstu.entity.SongSheetBean;
-import com.thinkstu.music.*;
+import com.thinkstu.musics.*;
 
 import org.litepal.LitePal;
 
@@ -27,6 +25,7 @@ public class SongAdapter extends BaseAdapter {
     }
 
     public SongAdapter(Context context) {
+        // 获取第一份歌单和其中的歌曲
         this.songDto  = new SongDto(LitePal.findFirst(SongSheetBean.class), LitePal.findAll(SongBean.class));
         this.mContext = context;
     }
@@ -67,6 +66,7 @@ public class SongAdapter extends BaseAdapter {
         viewHolder.menu.setTag(songBean);
         // 设置背景
         contentView.setBackgroundResource(R.drawable.list_item_background);
+
         return contentView;
     }
 
@@ -78,11 +78,16 @@ public class SongAdapter extends BaseAdapter {
     private void showPopMenu(final View view) {
         PopupMenu popupMenu = new PopupMenu(mContext, view);
         popupMenu.getMenuInflater().inflate(R.menu.song_menu, popupMenu.getMenu());
-        // TODO 下载功能
         popupMenu.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()) {
-                case R.id.menu_song_download:
-                    Toast.makeText(mContext, "暂未实现！", Toast.LENGTH_SHORT).show();
+                case R.id.menu_song_download: {
+                    // TODO 菜单的下载功能
+                    SongBean songBean = (SongBean) view.getTag();
+                    Intent   intent   = new Intent(mContext, DownloadService.class);
+                    Toast.makeText(mContext, "歌曲下载中...", Toast.LENGTH_SHORT).show();
+                    intent.putExtra("fileName", songBean.getName());
+                    mContext.startService(intent);
+                }
             }
             return false;
         });

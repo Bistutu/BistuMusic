@@ -10,7 +10,7 @@ import androidx.fragment.app.*;
 
 import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
-import com.thinkstu.music.*;
+import com.thinkstu.musics.*;
 
 import java.lang.ref.*;
 

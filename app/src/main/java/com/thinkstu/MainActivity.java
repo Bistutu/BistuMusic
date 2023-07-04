@@ -6,8 +6,8 @@ import androidx.fragment.app.*;
 import android.os.Bundle;
 import android.view.*;
 
-import com.thinkstu.music.*;
 import com.thinkstu.fragments.*;
+import com.thinkstu.musics.*;
 
 import org.litepal.LitePal;
 
@@ -23,10 +23,12 @@ public class MainActivity extends AppCompatActivity {
         }
         //初始化数据库
         LitePal.initialize(this);
+        // 每次启动时清空数据库，防止干扰
+        LitePal.deleteAll("songbean");
+        LitePal.deleteAll("songsheetbean");
+
         //将碎片和activity绑定
         initMainFragment(savedInstanceState);
-        //避免点击editText时，软键盘遮挡输入框
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     // 初始化碎片：将碎片和 activity 绑定
@@ -43,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // 隐藏 MainFragment，显示歌曲播放页
+    // 显示歌曲播放页
     public void enterMusicInfoFragment() {
-
         FragmentManager     fragmentManager     = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction
@@ -82,5 +83,4 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.popBackStack();
         }
     }
-
 }

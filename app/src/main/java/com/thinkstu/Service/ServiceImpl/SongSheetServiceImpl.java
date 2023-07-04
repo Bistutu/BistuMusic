@@ -20,21 +20,18 @@ public class SongSheetServiceImpl implements SongSheetService {
         return songSheet.delete();
     }
 
-    @Override
     public List<SongSheetBean> findAll() {
         //如果歌单数为0，创建新歌单 将assert中的music存入SongBean
-        if(LitePal.findAll(SongSheetBean.class).size() == 0){
+        if (LitePal.findAll(SongSheetBean.class).size() == 0) {
             SongSheetBean songSheet = new SongSheetBean("默认歌单", null);
             songSheet.save();
-            return LitePal.findAll(SongSheetBean.class);
-        }else{
-            return LitePal.findAll(SongSheetBean.class);
         }
+        return LitePal.findAll(SongSheetBean.class);
     }
 
     @Override
     public List<SongBean> findSongBeanBySongSheetId(int songSheetId) {
-        return LitePal.where("songSheetId = ?", songSheetId+"").find(SongBean.class);
+        return LitePal.where("songSheetId = ?", songSheetId + "").find(SongBean.class);
     }
 
     @Override

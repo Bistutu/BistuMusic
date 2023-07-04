@@ -1,23 +1,20 @@
 package com.thinkstu.fragments;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import android.os.*;
+import android.view.*;
+import android.widget.*;
 
-import com.thinkstu.MainActivity;
+import androidx.annotation.*;
+import androidx.fragment.app.*;
+
+import com.thinkstu.*;
+import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
-import com.thinkstu.Service.SongSheetService;
-import com.thinkstu.adater.SongSheetAdapter;
-import com.thinkstu.dto.SongDto;
-import com.thinkstu.entity.SongBean;
-import com.thinkstu.entity.SongSheetBean;
-import com.thinkstu.music.*;
+import com.thinkstu.adater.*;
+import com.thinkstu.dto.*;
+import com.thinkstu.entity.*;
+import com.thinkstu.musics.*;
 
 import org.greenrobot.eventbus.EventBus;
 

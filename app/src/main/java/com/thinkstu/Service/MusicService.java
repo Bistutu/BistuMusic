@@ -5,6 +5,8 @@ public interface MusicService {
     int PLAY_ORDER  = 1; // 顺序播放
     int PLAY_RANDOM = 4; // 随机播放
 
+    void loadMusic(String musicName);
+
     // 播放musicName，音乐名称 包括.mp3 如果参数为null,则播放当前音乐，若音乐已播放则继续播放。
     void play(String musicName);
 
@@ -44,7 +46,7 @@ public interface MusicService {
     // 返回 单位：毫秒
     int getDuration();
 
-    void loadMusic(String musicName);
+//    void loadMusic(String musicName);
 
     // 获取音乐列表
     // 返回音乐名称数组
