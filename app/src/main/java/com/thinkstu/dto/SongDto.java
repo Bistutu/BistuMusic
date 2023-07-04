@@ -17,10 +17,6 @@ public class SongDto {
         return isLocal;
     }
 
-    public void setLocal(boolean local) {
-        isLocal = local;
-    }
-
     public SongDto(SongSheetBean songSheetBean, List<SongBean> songBeanList) {
         this.songSheetBean = songSheetBean;
         this.songBeanList  = songBeanList;
@@ -36,15 +32,9 @@ public class SongDto {
         return songSheetBean;
     }
 
-    public void setSongSheetBean(SongSheetBean songSheetBean) {
-        this.songSheetBean = songSheetBean;
-    }
 
     public List<SongBean> getSongBeanList() {
         return songBeanList;
     }
 
-    public void setSongBeanList(List<SongBean> songBeanList) {
-        this.songBeanList = songBeanList;
-    }
 }

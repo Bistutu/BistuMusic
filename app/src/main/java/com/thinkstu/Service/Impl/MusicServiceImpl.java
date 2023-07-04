@@ -1,4 +1,4 @@
-package com.thinkstu.Service.ServiceImpl;
+package com.thinkstu.Service.Impl;
 
 
 import android.content.*;
@@ -16,6 +16,7 @@ public class MusicServiceImpl implements MusicService {
     private static MusicServiceImpl musicServiceImpl = null;
 
     private MediaPlayer mediaPlayer;
+    int     code = 0;
     Context myContext;
     private String[] musicNames, temp_musicNames;
     private int currentPosition, currentIndex, order = PLAY_ORDER;
@@ -59,15 +60,15 @@ public class MusicServiceImpl implements MusicService {
             FileInputStream fis = myContext.openFileInput(currentMusicName);
             mediaPlayer.setDataSource(fis.getFD());
             mediaPlayer.prepare(); // 准备
-//            if (mediaPlayer.isPlaying()){
-//                // 歌曲正在播放
-//                Msg.shorts(myContext, musicName+"正在播放");
-//            }
         } catch (IOException e) {
-            Intent intent = new Intent(myContext, DownloadService.class);
-            Toast.makeText(myContext, "歌曲下载中...", Toast.LENGTH_SHORT).show();
-            intent.putExtra("fileName", musicName);
-            myContext.startService(intent);
+            if (code == 0) {
+                code++;
+            } else {
+                Intent intent = new Intent(myContext, DownloadServiceImpl.class);
+                Toast.makeText(myContext, "歌曲下载中...", Toast.LENGTH_SHORT).show();
+                intent.putExtra("fileName", musicName);
+                myContext.startService(intent);
+            }
         }
     }
 

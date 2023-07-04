@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.thinkstu.Service.ServiceImpl.DownloadService" />
+        <service android:name="com.thinkstu.Service.Impl.DownloadServiceImpl" />
     </application>
 
     <!-- 网络请求权限 -->

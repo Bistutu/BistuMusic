@@ -1,4 +1,4 @@
-package com.thinkstu.Service.ServiceImpl;
+package com.thinkstu.Service.Impl;
 
 
 import com.thinkstu.Service.*;

@@ -3,10 +3,10 @@ package com.thinkstu.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.thinkstu.MainActivity;
 import com.thinkstu.Service.MusicService;
-import com.thinkstu.Service.ServiceImpl.*;
+import com.thinkstu.Service.Impl.*;
 import com.thinkstu.musics.*;
 
 import java.lang.ref.WeakReference;
@@ -30,6 +30,7 @@ public class MainFragment extends Fragment {
     private static final int          REFRESH_FOOTER = 3;
     private static final int          REFRESH_PLAY   = 4;
     private static       MainFragment mainFragment   = null;
+    View image_column;
 
     private View          view;
     private MusicService  musicService;
@@ -66,21 +67,33 @@ public class MainFragment extends Fragment {
         musicService = MusicServiceImpl.getInstance(getContext());      // 获取音乐服务（ Service 单例对象）
         //footer中的播放按钮
         final ImageView ImageView_play = view.findViewById(R.id.main_footer_play);
+        image_column = view.findViewById(R.id.small_column);
         // 播放按钮的点击事件
         ImageView_play.setOnClickListener(view -> {
             musicService.play(null);
             if (musicService.isPlaying()) {
-                ImageView_play.setImageResource(R.drawable.ic_pause_red);
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+                image_column.startAnimation(animation);
             } else {
-                ImageView_play.setImageResource(R.drawable.ic_play_red);
+                ImageView_play.setImageResource(R.drawable.ic_pause_red);
+                image_column.clearAnimation();
             }
         });
         // footer中的上一首按钮
         final ImageView ImageView_last = view.findViewById(R.id.main_footer_last);
-        ImageView_last.setOnClickListener(view -> musicService.last());
+        ImageView_last.setOnClickListener(view -> {
+            musicService.last();
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+            image_column.startAnimation(animation);
+        });
         // footer中的下一首按钮
         final ImageView ImageView_next = view.findViewById(R.id.main_footer_next);
-        ImageView_next.setOnClickListener(view -> musicService.next());
+        ImageView_next.setOnClickListener(view -> {
+            musicService.next();
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+            image_column.startAnimation(animation);
+        });
+
         // footer中的歌曲名
         textView_song = view.findViewById(R.id.main_footer_song);
         textView_song.setText(musicService.getCurrentMusicInfo());

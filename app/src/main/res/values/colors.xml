@@ -6,7 +6,6 @@
     <!-- 自定义 -->
     <color name="black">#000</color>
     <color name="purple">#675ed0</color>
-    <color name="light_reb">#675ed0</color>
 
     <color name="dividerColor">#22000000</color>
     <color name="dimGrey">#696969</color>

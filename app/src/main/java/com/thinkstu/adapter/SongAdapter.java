@@ -6,8 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-import com.thinkstu.Service.*;
-import com.thinkstu.Service.ServiceImpl.*;
+import com.thinkstu.Service.Impl.*;
 import com.thinkstu.dto.SongDto;
 import com.thinkstu.entity.SongBean;
 import com.thinkstu.entity.SongSheetBean;
@@ -80,9 +79,9 @@ public class SongAdapter extends BaseAdapter {
         popupMenu.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.menu_song_download: {
-                    // TODO 菜单的下载功能
+                    // TODO 📌菜单下载功能
                     SongBean songBean = (SongBean) view.getTag();
-                    Intent   intent   = new Intent(mContext, DownloadService.class);
+                    Intent   intent   = new Intent(mContext, DownloadServiceImpl.class);
                     Toast.makeText(mContext, "歌曲下载中...", Toast.LENGTH_SHORT).show();
                     intent.putExtra("fileName", songBean.getName());
                     mContext.startService(intent);

@@ -32,6 +32,7 @@
 
             <com.thinkstu.utils.RoundImageView
                 android:layout_width="40sp"
+                android:id="@+id/small_column"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_disk" />
 
@@ -43,30 +44,30 @@
                 android:layout_marginLeft="15sp"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="5sp"
-                android:textSize="16dp"
                 android:textColor="@color/dimGrey"
+                android:textSize="16dp"
                 tools:text="歌名\n歌手" />
 
             <ImageView
                 android:id="@+id/main_footer_last"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5sp"
+                android:layout_weight="1"
                 android:src="@drawable/ic_last_black" />
 
             <ImageView
                 android:id="@+id/main_footer_play"
-                android:layout_height="match_parent"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:layout_marginRight="5sp"
+                android:layout_weight="1"
                 android:src="@drawable/ic_play_red" />
 
             <ImageView
                 android:id="@+id/main_footer_next"
-                android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_next_black" />
 

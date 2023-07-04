@@ -1,4 +1,4 @@
-package com.thinkstu.Service.ServiceImpl;
+package com.thinkstu.Service.Impl;
 
 import android.app.*;
 import android.content.*;
@@ -10,11 +10,11 @@ import java.io.*;
 
 import okhttp3.*;
 
-// 下载服务
-public class DownloadService extends IntentService {
+// 核心代码：下载服务
+public class DownloadServiceImpl extends IntentService {
     OkHttpClient client = new OkHttpClient();
 
-    public DownloadService() {
+    public DownloadServiceImpl() {
         super("DownloadService");
     }
 
@@ -29,7 +29,7 @@ public class DownloadService extends IntentService {
         String   s     = split[1].toLowerCase();
         s = s.substring(0, s.lastIndexOf(".")).replaceAll(" ", "-");
         String url = "https://freemusicarchive.org/track/" + s + "/download";
-        Log.e("uuuuu", url);
+        Log.e("url_test", url);
 
         Request request = new Request.Builder()
                 .url(url)

@@ -21,12 +21,10 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        //初始化数据库
+        // 初始化数据库，并且每次启动时清空数据库，防止干扰
         LitePal.initialize(this);
-        // 每次启动时清空数据库，防止干扰
         LitePal.deleteAll("songbean");
         LitePal.deleteAll("songsheetbean");
-
         //将碎片和activity绑定
         initMainFragment(savedInstanceState);
     }

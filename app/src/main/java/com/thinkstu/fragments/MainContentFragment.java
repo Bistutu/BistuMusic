@@ -10,7 +10,7 @@ import androidx.fragment.app.*;
 
 import com.thinkstu.*;
 import com.thinkstu.Service.*;
-import com.thinkstu.Service.ServiceImpl.*;
+import com.thinkstu.Service.Impl.*;
 import com.thinkstu.adapter.*;
 import com.thinkstu.dto.*;
 import com.thinkstu.entity.*;
@@ -57,6 +57,7 @@ public class MainContentFragment extends Fragment {
         }
     }
 
+    // 作用：初始化视图
     private void initView() {
         //查歌单
         ListView                  listView         = view.findViewById(R.id.main_listView_songSheet);
