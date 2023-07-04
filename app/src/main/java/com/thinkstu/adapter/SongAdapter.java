@@ -1,12 +1,12 @@
-package com.thinkstu.adater;
+package com.thinkstu.adapter;
 
 import android.content.*;
-import android.util.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.dto.SongDto;
 import com.thinkstu.entity.SongBean;
@@ -66,7 +66,6 @@ public class SongAdapter extends BaseAdapter {
         viewHolder.menu.setTag(songBean);
         // 设置背景
         contentView.setBackgroundResource(R.drawable.list_item_background);
-
         return contentView;
     }
 

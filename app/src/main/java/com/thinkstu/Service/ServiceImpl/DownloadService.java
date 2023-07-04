@@ -40,7 +40,7 @@ public class DownloadService extends IntentService {
             public void onFailure(Call call, IOException e) {
                 // 下载失败
                 Handler mainHandler = new Handler(Looper.getMainLooper());
-                mainHandler.post(() -> Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show());
+                mainHandler.post(() -> Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_LONG).show());
             }
 
             @Override
@@ -48,10 +48,9 @@ public class DownloadService extends IntentService {
                 if (!response.isSuccessful()) {
                     // 服务器返回错误
                     Handler mainHandler = new Handler(Looper.getMainLooper());
-                    mainHandler.post(() -> Toast.makeText(getApplicationContext(), "服务器错误", Toast.LENGTH_SHORT).show());
+                    mainHandler.post(() -> Toast.makeText(getApplicationContext(), "服务器错误", Toast.LENGTH_LONG).show());
                 } else {
                     InputStream      input  = response.body().byteStream();
-//                    FileOutputStream output = openFileOutput(fileName + ".mp3", Context.MODE_PRIVATE);
                     FileOutputStream output = openFileOutput(fileName, Context.MODE_PRIVATE);
 
                     byte[] data = new byte[4096];
@@ -64,7 +63,7 @@ public class DownloadService extends IntentService {
                     output.close();
                     input.close();
                     Handler mainHandler = new Handler(Looper.getMainLooper());
-                    mainHandler.post(() -> Toast.makeText(getApplicationContext(), "下载成功", Toast.LENGTH_SHORT).show());
+                    mainHandler.post(() -> Toast.makeText(getApplicationContext(), "下载成功", Toast.LENGTH_LONG).show());
                 }
             }
         });

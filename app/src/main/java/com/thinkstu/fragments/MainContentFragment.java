@@ -11,7 +11,7 @@ import androidx.fragment.app.*;
 import com.thinkstu.*;
 import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
-import com.thinkstu.adater.*;
+import com.thinkstu.adapter.*;
 import com.thinkstu.dto.*;
 import com.thinkstu.entity.*;
 import com.thinkstu.musics.*;

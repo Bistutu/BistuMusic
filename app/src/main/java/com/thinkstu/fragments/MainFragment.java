@@ -99,7 +99,10 @@ public class MainFragment extends Fragment {
     }
 
     //刷新 footer
-    private void refreshFooter() {new Thread(() -> footerHandler.sendEmptyMessage(REFRESH_FOOTER)).start();}
+    private void refreshFooter() {
+        new Thread(() -> footerHandler.sendEmptyMessage(REFRESH_FOOTER)).start();
+    }
+
     private void refreshPlay() {
         new Thread(() -> footerHandler.sendEmptyMessage(REFRESH_PLAY)).start();
     }
@@ -113,7 +116,6 @@ public class MainFragment extends Fragment {
         }
         super.onHiddenChanged(hidden);
     }
-
 
 
     /**
@@ -134,7 +136,6 @@ public class MainFragment extends Fragment {
             MainFragment activity = mainFragment.get();
             switch (msg.what) {
                 case REFRESH_FOOTER:
-                    // TODO 注释了一行标记
                     activity.textView_song.setText(activity.musicService.getCurrentMusicInfo());
                     break;
                 case REFRESH_PLAY:

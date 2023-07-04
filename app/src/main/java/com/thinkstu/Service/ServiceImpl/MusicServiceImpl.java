@@ -1,10 +1,9 @@
 package com.thinkstu.Service.ServiceImpl;
 
 
-import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
+import android.content.*;
 import android.media.MediaPlayer;
+import android.widget.*;
 
 import com.thinkstu.Service.*;
 import com.thinkstu.entity.*;
@@ -20,7 +19,6 @@ public class MusicServiceImpl implements MusicService {
     Context myContext;
     private String[] musicNames, temp_musicNames;
     private int currentPosition, currentIndex, order = PLAY_ORDER;
-    private AssetManager                assetManager;
     private String                      currentMusicName;
     private MusicChangedListener        musicChangedListener;
     private MusicPlayingChangedListener musicPlayingChangedListener;
@@ -29,55 +27,30 @@ public class MusicServiceImpl implements MusicService {
         myContext = context;
         // 播放器对象
         mediaPlayer = new MediaPlayer();
-        try {
-            // 获取 assets/music 下所有文件
-            assetManager = context.getAssets();
-            musicNames   = assetManager.list("music");
-            // TODO 打标记📌：下面注释的五首英文歌
-            musicNames = new String[]{
-                    "Ketsa - Rain Man.mp3",
-                    "Polkavant - Minor Piano.mp3",
-                    "TimTaj - Melody of Love.mp3",
-                    "Kathrin Klimek - Liquid Sun.mp3",
-                    "Kathrin Klimek - Lucky Tears.mp3"};
-
-            if (musicNames != null) {
-                temp_musicNames = new String[musicNames.length];
-                SongSheetService songSheetService = new SongSheetServiceImpl();
-                //深拷贝
-//                for (int i = 0; i < musicNames.length; i++) {
-//                    temp_musicNames[i] = musicNames[i];
-//                    //运行一次即可，用于将本地音乐存入 SongBean，参数：歌曲名，歌单id
-//                    SongBean songBean = new SongBean(musicNames[i], songSheetService.findAll().get(0).getId());
-//                }
-                // 创建默认歌单，有 5 首歌曲，第一首已经下载
-                new SongBean(musicNames[0], songSheetService.findAll().get(0).getId()).save();
-                new SongBean(musicNames[1], songSheetService.findAll().get(0).getId()).save();
-                new SongBean(musicNames[2], songSheetService.findAll().get(0).getId()).save();
-                new SongBean(musicNames[3], songSheetService.findAll().get(0).getId()).save();
-                new SongBean(musicNames[4], songSheetService.findAll().get(0).getId()).save();
-                // 底部播放栏目默认显示第一首歌曲
-                currentMusicName = musicNames[0];
-                loadMusic(currentMusicName);    // 加载
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        // TODO 打标记📌：五首英文歌曲
+        musicNames = new String[]{
+                "Ketsa - Rain Man.mp3",
+                "Polkavant - Minor Piano.mp3",
+                "TimTaj - Melody of Love.mp3",
+                "Kathrin Klimek - Liquid Sun.mp3",
+                "Kathrin Klimek - Lucky Tears.mp3"
+        };
+        if (musicNames != null) {
+            temp_musicNames = new String[musicNames.length];
+            SongSheetService songSheetService = new SongSheetServiceImpl();
+            // 创建默认歌单，有 5 首歌曲，第一首已经下载
+            new SongBean(musicNames[0], songSheetService.findAll().get(0).getId()).save();
+            new SongBean(musicNames[1], songSheetService.findAll().get(0).getId()).save();
+            new SongBean(musicNames[2], songSheetService.findAll().get(0).getId()).save();
+            new SongBean(musicNames[3], songSheetService.findAll().get(0).getId()).save();
+            new SongBean(musicNames[4], songSheetService.findAll().get(0).getId()).save();
+            // 底部播放栏目默认显示第一首歌曲
+            currentMusicName = musicNames[0];
+            loadMusic(currentMusicName);    // 加载
         }
     }
 
-   /* @Override
-    public void loadMusic(String musicName) {
-        currentMusicName = musicName;
-        try {
-            mediaPlayer.reset();    // 重置
-            AssetFileDescriptor afd = assetManager.openFd("music/" + currentMusicName); // 获取文件描述符
-            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            mediaPlayer.prepare();  // 准备
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
+    // 从 data/data/项目包名/files/ 目录下读取音乐文件
     @Override
     public void loadMusic(String musicName) {
         currentMusicName = musicName;
@@ -86,8 +59,15 @@ public class MusicServiceImpl implements MusicService {
             FileInputStream fis = myContext.openFileInput(currentMusicName);
             mediaPlayer.setDataSource(fis.getFD());
             mediaPlayer.prepare(); // 准备
+//            if (mediaPlayer.isPlaying()){
+//                // 歌曲正在播放
+//                Msg.shorts(myContext, musicName+"正在播放");
+//            }
         } catch (IOException e) {
-            e.printStackTrace();
+            Intent intent = new Intent(myContext, DownloadService.class);
+            Toast.makeText(myContext, "歌曲下载中...", Toast.LENGTH_SHORT).show();
+            intent.putExtra("fileName", musicName);
+            myContext.startService(intent);
         }
     }
 
@@ -221,7 +201,6 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public void onDestroy() {
-        assetManager.close();
         mediaPlayer.release();
     }
 
@@ -251,7 +230,6 @@ public class MusicServiceImpl implements MusicService {
         String   str  = currentMusicName.substring(0, currentMusicName.length() - 4);
         String[] info = str.split(" - ");
         return info[1] + "\n" + info[0];
-//        return "111";
     }
 
     @Override

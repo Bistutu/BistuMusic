@@ -1,4 +1,4 @@
-package com.thinkstu.adater;
+package com.thinkstu.adapter;
 
 
 import android.content.*;
