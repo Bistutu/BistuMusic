@@ -22,16 +22,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-/*歌单主界面*/
-
+/* 歌单主界面 */
 public class SongContentFragment extends Fragment {
-    private static final String TAG = "SongContentFragment";
     private static SongContentFragment songContentFragment;
 
-    private View view;
+    private View         view;
     private MusicService musicService;
-    private SongDto songDto;
+    private SongDto      songDto;
 
+    // 构建单例模式
     public static SongContentFragment getInstance() {
         if (songContentFragment == null) {
             synchronized (SongContentFragment.class) {
@@ -68,14 +67,18 @@ public class SongContentFragment extends Fragment {
 
     private void initView() {
         musicService = MusicServiceImpl.getInstance(getContext());
-        ListView listView = view.findViewById(R.id.song_list);
+
+        ListView listView       = view.findViewById(R.id.song_list);
         TextView textView_title = view.findViewById(R.id.song_title);
+
         textView_title.setText(songDto.getSongSheetBean().getName());
+        // 如果是本地歌单，则不显示歌单图片
         if (songDto.isLocal()) {
             listView.setAdapter(new SongAdapter(getContext()));
         } else {
             listView.setAdapter(new SongAdapter(getContext(), songDto));
         }
+        // 点击事件：播放歌曲
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             SongBean songBean = (SongBean) adapterView.getItemAtPosition(i);
             musicService.play(songBean.getName());

@@ -26,12 +26,12 @@ import java.util.List;
 /*歌单列表*/
 
 public class MainContentFragment extends Fragment {
-    private static final String TAG = "MainContentFragment";
 
     private        View                view;
     private static MainContentFragment mainContentFragment;
     private        SongSheetService    songSheetService;
 
+    // 构建单例模式
     public static MainContentFragment getInstance() {
         if (mainContentFragment == null) {
             synchronized (MainContentFragment.class) {

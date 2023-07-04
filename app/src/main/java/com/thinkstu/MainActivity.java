@@ -4,6 +4,7 @@ import androidx.appcompat.app.*;
 import androidx.fragment.app.*;
 
 import android.os.Bundle;
+import android.view.*;
 
 import com.thinkstu.music.*;
 import com.thinkstu.fragments.*;
@@ -15,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 隐藏标题栏
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         //初始化数据库
         LitePal.initialize(this);
         //将碎片和activity绑定
@@ -39,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 隐藏 MainFragment，显示歌曲播放页
     public void enterMusicInfoFragment() {
+
         FragmentManager     fragmentManager     = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction

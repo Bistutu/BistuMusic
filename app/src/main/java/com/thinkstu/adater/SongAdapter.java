@@ -48,8 +48,8 @@ public class SongAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        SongBean songBean = (SongBean) getItem(i);
-        View     contentView;
+        SongBean   songBean = (SongBean) getItem(i);
+        View       contentView;
         ViewHolder viewHolder;
         if (view == null) {
             contentView         = LayoutInflater.from(mContext).inflate(R.layout.item_song, null);
@@ -62,7 +62,8 @@ public class SongAdapter extends BaseAdapter {
             viewHolder  = (ViewHolder) contentView.getTag();
         }
         viewHolder.textView.setText(songBean.getName());
-        viewHolder.menu.setOnClickListener(view1 -> view1.post(() -> showPopMenu(view1)));
+        // 设置点击事件：弹出菜单
+        viewHolder.menu.setOnClickListener(v -> v.post(() -> showPopMenu(v)));
         viewHolder.menu.setTag(songBean);
         // 设置背景
         contentView.setBackgroundResource(R.drawable.list_item_background);
@@ -75,20 +76,16 @@ public class SongAdapter extends BaseAdapter {
     }
 
     private void showPopMenu(final View view) {
-        final View        v           = LayoutInflater.from(mContext).inflate(R.layout.dialog_addtosheet, null);
-        PopupMenu         popupMenu   = new PopupMenu(mContext, view);
-        final SongBean    songBean    = (SongBean) view.getTag();
-        final SongAdapter songAdapter = this;
+        PopupMenu popupMenu = new PopupMenu(mContext, view);
         popupMenu.getMenuInflater().inflate(R.menu.song_menu, popupMenu.getMenu());
+        // TODO 下载功能
         popupMenu.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.menu_song_download:
-                    // TODO 下载功能
                     Toast.makeText(mContext, "暂未实现！", Toast.LENGTH_SHORT).show();
             }
             return false;
         });
         popupMenu.show();
     }
-
 }

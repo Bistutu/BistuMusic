@@ -1,43 +1,34 @@
 package com.thinkstu.fragments;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.os.*;
+import android.view.*;
+import android.view.animation.*;
+import android.widget.*;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+import androidx.annotation.*;
+import androidx.fragment.app.*;
 
-import com.thinkstu.Service.MusicService;
+import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
 import com.thinkstu.music.*;
 
-import java.lang.ref.WeakReference;
-/*
-* 歌曲播放界面
-* */
+import java.lang.ref.*;
+
+// 歌曲播放界面
 public class MusicInfoFragment extends Fragment {
-    private static final String TAG = "MusicInfoFragment";
-    private static final int REFRESH_SEEKBAR_PROGRESS = 1;
-    private static final int REFRESH_SEEKBAR_MAX = 2;
-    private static final int REFRESH_HEADER = 3;
-    private static final int REFRESH_PLAY = 4;
-    private static MusicInfoFragment musicInfoFragment = null;
+    private static final int               REFRESH_SEEKBAR_PROGRESS = 1;    // 刷新进度条
+    private static final int               REFRESH_SEEKBAR_MAX      = 2;    // 刷新进度条最大值
+    private static final int               REFRESH_HEADER           = 3;    // 刷新头部
+    private static final int               REFRESH_PLAY             = 4;    // 刷新播放按钮
+    private static       MusicInfoFragment musicInfoFragment        = null;
 
-    private MusicService musicService;
-    private View view;
+    private MusicService   musicService;
+    private View           view;
     private SeekBarHandler seekBarHandler;
-    private TextView textView_title;
-    private SeekBar seekBar;
+    private TextView       textView_title;
+    private SeekBar        seekBar;
 
+    // 单例模式
     public static MusicInfoFragment getInstance() {
         if (musicInfoFragment == null) {
             synchronized (MusicInfoFragment.class) {
@@ -52,9 +43,8 @@ public class MusicInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
         seekBarHandler = new SeekBarHandler(this);
-        view = inflater.inflate(R.layout.fragment_musicinfo, container, false);
+        view           = inflater.inflate(R.layout.fragment_music_info, container, false);
         return view;
     }
 
@@ -64,12 +54,17 @@ public class MusicInfoFragment extends Fragment {
     }
 
     private void initView() {
-        musicService = MusicServiceImpl.getInstance(getContext());
+        musicService   = MusicServiceImpl.getInstance(getContext());
         textView_title = view.findViewById(R.id.info_head_title);
-        seekBar = view.findViewById(R.id.info_seekBar);
-        ImageView imageView_last = view.findViewById(R.id.info_last);
+        seekBar        = view.findViewById(R.id.info_seekBar);
+        // 图片旋转动画
+        View      image_column = view.findViewById(R.id.image_column);
+        Animation animation    = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
+        image_column.startAnimation(animation);
+
+        ImageView       imageView_last = view.findViewById(R.id.info_last);
         final ImageView imageView_play = view.findViewById(R.id.info_play);
-        ImageView imageView_next = view.findViewById(R.id.info_next);
+        ImageView       imageView_next = view.findViewById(R.id.info_next);
 
         musicService.setMusicChangedListener(() -> refreshHeader());
         musicService.setMusicPlayingChangedListener(() -> {
@@ -82,13 +77,12 @@ public class MusicInfoFragment extends Fragment {
         });
 
         textView_title.setText(musicService.getCurrentMusicInfo());
-
-
+        // 上一首、下一首
         imageView_last.setOnClickListener(view -> musicService.last());
-
         imageView_next.setOnClickListener(view -> musicService.next());
 
         refreshImgPlay();
+        // 播放按钮
         if (musicService.isPlaying()) {
             send();
         }
@@ -108,7 +102,6 @@ public class MusicInfoFragment extends Fragment {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
@@ -127,7 +120,6 @@ public class MusicInfoFragment extends Fragment {
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        Log.d(TAG, "onHiddenChanged: ");
         super.onHiddenChanged(hidden);
         if (!hidden) {
             initView();
@@ -135,33 +127,18 @@ public class MusicInfoFragment extends Fragment {
     }
 
     private void refreshImgPlay() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                seekBarHandler.sendEmptyMessage(REFRESH_PLAY);
-            }
-        }).start();
+        new Thread(() -> seekBarHandler.sendEmptyMessage(REFRESH_PLAY)).start();
     }
 
     private void refreshHeader() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                seekBarHandler.sendEmptyMessage(REFRESH_HEADER);
-            }
-        }).start();
+        new Thread(() -> seekBarHandler.sendEmptyMessage(REFRESH_HEADER)).start();
     }
 
     /**
      * 新建线程，通过handler定时刷新SeekBar的ui
      */
     private void send() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                seekBarHandler.sendEmptyMessage(REFRESH_SEEKBAR_MAX);
-            }
-        }).start();
+        new Thread(() -> seekBarHandler.sendEmptyMessage(REFRESH_SEEKBAR_MAX)).start();
     }
 
     /**
@@ -169,8 +146,8 @@ public class MusicInfoFragment extends Fragment {
      * 由handleMessage处理
      */
     private static class SeekBarHandler extends Handler {
-        private static final String TAG = "SeekBarHandler";
         WeakReference<MusicInfoFragment> musicInfoFragment;
+
         private SeekBarHandler(MusicInfoFragment musicInfoFragment) {
             this.musicInfoFragment = new WeakReference<>(musicInfoFragment);
         }
@@ -208,5 +185,4 @@ public class MusicInfoFragment extends Fragment {
             }
         }
     }
-
 }

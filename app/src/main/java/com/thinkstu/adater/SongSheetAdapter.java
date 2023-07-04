@@ -1,18 +1,13 @@
 package com.thinkstu.adater;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
 
+import android.content.*;
+import android.view.*;
+import android.widget.*;
+
+import com.thinkstu.Service.*;
 import com.thinkstu.Service.ServiceImpl.*;
-import com.thinkstu.Service.SongSheetService;
-import com.thinkstu.entity.SongSheetBean;
+import com.thinkstu.entity.*;
 import com.thinkstu.music.*;
 
 import java.util.List;
@@ -49,11 +44,9 @@ public class SongSheetAdapter extends BaseAdapter {
     // 作用：获取歌单列表
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        SongSheetBean songSheet = (SongSheetBean) getItem(i);
-        View          contentView;
+        SongSheetBean    songSheet = (SongSheetBean) getItem(i);
+        View             contentView;
         final ViewHolder viewHolder;
-
-
         if (view == null) {
             contentView          = LayoutInflater.from(mContext).inflate(R.layout.item_songsheet, null);
             viewHolder           = new ViewHolder();
@@ -70,25 +63,11 @@ public class SongSheetAdapter extends BaseAdapter {
                 viewHolder.menu.setVisibility(View.VISIBLE);
             }
         }
-
         viewHolder.imageView.setImageResource(R.drawable.ic_disk);
         viewHolder.name.setText(songSheet.getName());
         viewHolder.menu.setOnClickListener(view1 -> view1.post(() -> showPopMenu(view1)));
         viewHolder.menu.setTag(getItem(i));
         return contentView;
-    }
-
-    /**
-     * 局部刷新
-     *
-     * @param listView 适配器对应的listView
-     * @param position item的位置
-     */
-
-    public void notifyDataSetChanged(ListView listView, int position) {
-        int  firstVisiblePosition = listView.getFirstVisiblePosition();
-        View view                 = listView.getChildAt(position - firstVisiblePosition);
-        getView(position, view, listView);
     }
 
     private class ViewHolder {

@@ -9,7 +9,6 @@ import org.litepal.LitePal;
 import java.util.List;
 
 public class SongSheetServiceImpl implements SongSheetService {
-    private static final String TAG = "SongSheetServiceImpl";
     @Override
     public boolean add(String name, String imgAddress) {
         SongSheetBean songSheet = new SongSheetBean(name, imgAddress);

@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class MusicServiceImpl implements MusicService {
-    private static final String           TAG              = "MusicServiceImpl";
     private static       MusicServiceImpl musicServiceImpl = null;
 
     private MediaPlayer mediaPlayer;
@@ -51,11 +50,6 @@ public class MusicServiceImpl implements MusicService {
                     randomNames[i] = musicNames[i];
                     //运行一次即可，用于将本地音乐存入SongBean
                     SongBean songBean = new SongBean(musicNames[i], songSheetService.findAll().get(0).getId());
-                    if (songBean.save()) {
-                        Log.d(TAG, "MusicServiceImpl: save " + musicNames[i] + "successfully!");
-                    } else {
-                        Log.d(TAG, "MusicServiceImpl: default!");
-                    }
                 }
                 currentMusicName = musicNames[0];
                 loadMusic(currentMusicName);
@@ -157,12 +151,10 @@ public class MusicServiceImpl implements MusicService {
         if (i == PLAY_ORDER) {
             order        = PLAY_ORDER;
             currentIndex = Arrays.binarySearch(musicNames, currentMusicName);     //二分法查找当前播放音乐的索引
-            Log.d(TAG, "setPlayOrder: currentIndex order " + currentIndex);
         } else {
             order = PLAY_RANDOM;
             shuffleCard(musicNames);
             currentIndex = search(randomNames, currentMusicName);    //二分法查找当前播放音乐的索引
-            Log.d(TAG, "setPlayOrder: currentIndex random " + currentIndex);
         }
     }
 
@@ -233,9 +225,6 @@ public class MusicServiceImpl implements MusicService {
             String temp  = randomNames[i];
             randomNames[i]     = randomNames[index];
             randomNames[index] = temp;
-        }
-        for (int i = 0; i < len; i++) {
-            Log.d(TAG, "shuffleCard: random " + randomNames[i]);
         }
     }
 
