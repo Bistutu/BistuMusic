@@ -58,7 +58,6 @@ public class DownloadServiceImpl extends IntentService {
                     while ((count = input.read(data)) != -1) {
                         output.write(data, 0, count);
                     }
-
                     output.flush();
                     output.close();
                     input.close();

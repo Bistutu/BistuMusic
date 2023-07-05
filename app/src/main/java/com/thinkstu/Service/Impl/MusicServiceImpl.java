@@ -25,6 +25,8 @@ public class MusicServiceImpl implements MusicService {
     private MusicPlayingChangedListener musicPlayingChangedListener;
 
     private MusicServiceImpl(Context context) {
+
+
         myContext = context;
         // 播放器对象
         mediaPlayer = new MediaPlayer();
@@ -266,5 +268,4 @@ public class MusicServiceImpl implements MusicService {
     public void setMusicPlayingChangedListener(MusicPlayingChangedListener musicPlayingChangedListener) {
         this.musicPlayingChangedListener = musicPlayingChangedListener;
     }
-
 }
